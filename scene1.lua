@@ -3,7 +3,7 @@
 -- Created by: Matsuru Hoshi
 -- Created on: May 6, 2019
 --
--- This file plays with scenes
+-- This file plays with scene 1
 -----------------------------------------------------------------------------------------
 
 local composer = require( "composer" )
@@ -16,7 +16,14 @@ local scene = composer.newScene()
 -- -----------------------------------------------------------------------------------
  
  
- 
+ local function showScene2()
+
+    local options = {
+            effect = "fade",
+            time = 3000
+    }
+    composer.gotoScene( "scene2", options)
+end
  
 -- -----------------------------------------------------------------------------------
 -- Scene event functions
@@ -24,8 +31,16 @@ local scene = composer.newScene()
  
 -- create()
 function scene:create( event )
+    print("scene1 create")
  
     local sceneGroup = self.view
+    local background  = display.newRect( display.contentCenterX, display.contentCenterY, display.contentWidth, display.contentHeight)
+    background:setFillColor( 49/255, 53/255, 123/255)
+    sceneGroup:insert(background)
+
+    local myTitle = display.newText( "Back then, the world was better, before the UN went to war. \n No one really realised what was going on before it was too late.", display.contentCenterX, display.contentCenterY, "Times New Roman", 34)
+    myTitle:setFillColor( 1, 1, 1)
+    sceneGroup:insert(myTitle)
     -- Code here runs when the scene is first created but has not yet appeared on screen
  
 end
@@ -39,9 +54,9 @@ function scene:show( event )
  
     if ( phase == "will" ) then
         -- Code here runs when the scene is still off screen (but is about to come on screen)
- 
     elseif ( phase == "did" ) then
         -- Code here runs when the scene is entirely on screen
+        timer.performWithDelay( 7000, showScene2)
  
     end
 end
@@ -52,6 +67,8 @@ function scene:hide( event )
  
     local sceneGroup = self.view
     local phase = event.phase
+ 
+    print("scene1 hide")
  
     if ( phase == "will" ) then
         -- Code here runs when the scene is on screen (but is about to go off screen)
@@ -65,6 +82,7 @@ end
  
 -- destroy()
 function scene:destroy( event )
+    print("scene1 destroy")
  
     local sceneGroup = self.view
     -- Code here runs prior to the removal of scene's view
